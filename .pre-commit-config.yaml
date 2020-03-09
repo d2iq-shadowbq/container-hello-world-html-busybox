@@ -7,6 +7,7 @@
   - id: check-yaml
     args: ["-m", "--unsafe"]
     stages: [commit]
+    files: ^templates/
   - id: mixed-line-ending
     args: ["-f", "auto"]
     stages: [commit]
