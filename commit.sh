@@ -3,5 +3,5 @@
 _APP_VERSION=$(cat ./VERSION)
 
 git add .
-git commit -m -m "$_APP_VERSION"
+git commit -m "$_APP_VERSION"
 git tag -a "v$_APP_VERSION" -m "$_APP_VERSION"
