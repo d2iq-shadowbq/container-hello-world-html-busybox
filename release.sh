@@ -5,5 +5,6 @@
 _APP_VERSION=$(cat ./VERSION)
 docker login
 
+git push origin --tags
 docker image tag "hello-world:$_APP_VERSION" "d2iqshadowbq/hello-world:$_APP_VERSION"
 docker image push "d2iqshadowbq/hello-world:$_APP_VERSION"
