@@ -3,8 +3,8 @@
 ## Loop
 
 ```shell
-build.sh
 bump patch
+build.sh
 commit.sh
 release.sh
 ```
