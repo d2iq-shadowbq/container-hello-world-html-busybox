@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-docker build -t "hello-world:$(cat ./VERSION)" .
-docker run -p 80:8005 hello-world
-## open your browser and check http://localhost/
+# Ensure tunnelblick is setfor Docker for Mac if using OSX
+
+_APP_VERSION=$(cat ./VERSION)
 docker login
-docker tag hello-world d2iqshadowbq/hello-world
-docker push d2iqshadowbq/hello-world:latest
+
+docker build -t "hello-world:$_APP_VERSION" .
+docker run -p 80:8005 hello-world
+curl -s http:///localhost |grep 'Hello World'
