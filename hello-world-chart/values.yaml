@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: d2iqshadowbq/hello-world
-  tag: v0.0.4
+  tag: 0.0.4
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
