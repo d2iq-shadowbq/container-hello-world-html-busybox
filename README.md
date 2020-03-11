@@ -10,7 +10,7 @@ release.sh
 ```
 
 
-## Helm
+## Helm Building
 
 ```shell
 $> helm lint charts/hello-world/
@@ -19,16 +19,21 @@ $> helm lint charts/hello-world/
 
 1 chart(s) linted, no failures
 
-[hello-world/charts/hello-world]$> helm package . -d ./charts --debug
-Successfully packaged chart and saved it to: charts/hello-world-0.1.2.tgz
-[debug] Successfully saved charts/hello-world-0.1.2.tgz to /Users/scottmacgregor/.helm/repository/local
+[hello-world/charts/hello-world]$>  helm package . -d ../../chartsbins/ --debug
+Successfully packaged chart and saved it to: ../../chartsbins/hello-world-0.1.4.tgz
+[debug] Successfully saved ../../chartsbins/hello-world-0.1.4.tgz to /Users/scottmacgregor/.helm/repository/local
 ```
 
-## Observe
+## Observe the LoadBalancer Installed
 
 ```
-helm install ./charts/hello-world/charts/hello-world-0.1.2.tgz --name helloworld
+helm install ./chartbins/hello-world-0.1.2.tgz --name hw
 kubectl get svc --watch # wait for a IP
+```
+
+```shell
+_hello_world_svc=$(kubectl get svc --namespace default hw-hello-world --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}")
+curl -s "http://$_hello_world_svc"
 ```
 
 ### Helm Inspect
@@ -40,28 +45,27 @@ this will dump the `values.yaml`
 ### Output
 
 ```shell
-helm install hello-world-chart-0.1.1.tgz --name helloworld
-NAME:   helloworld
-LAST DEPLOYED: Mon Mar  9 21:30:27 2020
+NAME:   hw
+LAST DEPLOYED: Wed Mar 11 13:38:38 2020
 NAMESPACE: default
 STATUS: DEPLOYED
 
 RESOURCES:
 ==> v1/Deployment
-NAME                          AGE
-helloworld-hello-world-chart  0s
+NAME             AGE
+hw-hello-world  0s
 
 ==> v1/Pod(related)
-NAME                                           AGE
-helloworld-hello-world-chart-59f75b7f75-qjmq2  0s
+NAME                             AGE
+hw-hello-world-77469c4c5-gbfch  0s
 
 ==> v1/Service
-NAME                          AGE
-helloworld-hello-world-chart  0s
+NAME             AGE
+hw-hello-world  0s
 
 ==> v1/ServiceAccount
-NAME                          AGE
-helloworld-hello-world-chart  0s
+NAME             AGE
+hw-hello-world  0s
 
 
 NOTES:
@@ -78,7 +82,43 @@ NAME      	REVISION	UPDATED                 	STATUS	CHART                  	APP 
 helloworld	1       	Mon Mar  9 16:55:39 2020	FAILED	hello-world-chart-0.1.0	1.0        	default
 ```
 
-### ELB Not configured correctly
+### ELB Configure Correctly
+
+```shell
+Name:                     hw-hello-world
+Namespace:                default
+Labels:                   app.kubernetes.io/instance=hw
+                          app.kubernetes.io/managed-by=Tiller
+                          app.kubernetes.io/name=hello-world
+                          app.kubernetes.io/version=1.0
+                          helm.sh/chart=hello-world-0.1.4
+Annotations:              <none>
+Selector:                 app.kubernetes.io/instance=h-w,app.kubernetes.io/name=hello-world
+Type:                     LoadBalancer
+IP:                       10.255.46.62
+LoadBalancer Ingress:     172.17.1.201
+Port:                     http  80/TCP
+TargetPort:               8005/TCP
+NodePort:                 http  32052/TCP
+Endpoints:                10.254.207.226:8005
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:
+  Type    Reason        Age                  From                Message
+  ----    ------        ----                 ----                -------
+  Normal  IPAllocated   13m                  metallb-controller  Assigned IP "172.17.1.201"
+  Normal  nodeAssigned  3m33s (x3 over 13m)  metallb-speaker     announcing from node "konvoy-docker-worker-pool0-0"
+```
+
+## Errors / Tweaks
+
+Telling helm to package the output into a subdirectory will cause a recursive package. Even worse if you put the `tgz` into charts it will treat itself as dependency causing a bomb failure.
+
+Also Helm had issues as it created a readiness and liveliness probe by default. This is important, but it needs to be disabled in the `deployment.yaml` for `hello-world`.  Note, we could change it to check for correct port etc..
+
+### ELB **Not** configured correctly
+
+* Note the default template messed up and didnt work with `TargetPort`
 
 ```shell
 kubectl describe service helloworld
