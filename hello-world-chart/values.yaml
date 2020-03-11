@@ -34,8 +34,7 @@ securityContext: {}
 service:
   name: hello-world
   type: LoadBalancer
-  externalPort: 80
-  internalPort: 8005
+  targetPort: 8005
   port: 80
 
 ingress:
