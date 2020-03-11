@@ -29,3 +29,9 @@
   - id: shellcheck
     stages: [commit]
     args: ["-e", "SC1091"]
+- repo: https://github.com/gruntwork-io/pre-commit
+  rev: v0.1.3
+  hooks:
+  - id: helmlint
+    stages: [commit]
+    files: hellow-world-chart/
