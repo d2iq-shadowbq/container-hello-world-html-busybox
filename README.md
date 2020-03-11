@@ -27,7 +27,7 @@ Successfully packaged chart and saved it to: charts/hello-world-0.1.2.tgz
 ## Observe
 
 ```
-helm install ./charts/hello-world/charts/hello-world-chart-0.1.0.tgz --name helloworld
+helm install ./charts/hello-world/charts/hello-world-0.1.2.tgz --name helloworld
 kubectl get svc --watch # wait for a IP
 ```
 
