@@ -34,4 +34,4 @@
   hooks:
   - id: helmlint
     stages: [commit]
-    files: hellow-world-chart/
+    files: ^hellow-world-chart/

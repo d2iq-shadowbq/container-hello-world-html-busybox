@@ -13,14 +13,24 @@ release.sh
 ## Helm
 
 ```shell
-helm lint hello-world-chart/
-helm package helloworld-chart --debug
+helm lint charts/
+[hello-world/charts/hello-world]$> helm package . -d ./charts --debug
+Successfully packaged chart and saved it to: charts/hello-world-0.1.2.tgz
+[debug] Successfully saved charts/hello-world-0.1.2.tgz to /Users/scottmacgregor/.helm/repository/local
 ```
+
 ## Observe
+
 ```
-helm install helloworld-chart-0.1.0.tgz --name helloworld
+helm install ./charts/hello-world/charts/hello-world-chart-0.1.0.tgz --name helloworld
 kubectl get svc --watch # wait for a IP
 ```
+
+### Helm Inspect
+
+`helm inspect values hello-world-chart`
+
+this will dump the `values.yaml`
 
 ### Output
 
