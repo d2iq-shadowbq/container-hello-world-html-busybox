@@ -13,7 +13,12 @@ release.sh
 ## Helm
 
 ```shell
-helm lint charts/
+$> helm lint charts/hello-world/
+==> Linting charts/hello-world/
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, no failures
+
 [hello-world/charts/hello-world]$> helm package . -d ./charts --debug
 Successfully packaged chart and saved it to: charts/hello-world-0.1.2.tgz
 [debug] Successfully saved charts/hello-world-0.1.2.tgz to /Users/scottmacgregor/.helm/repository/local
