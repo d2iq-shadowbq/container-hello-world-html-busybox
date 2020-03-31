@@ -162,3 +162,7 @@ docker rmi hello-world
 helm delete helloworld
 helm delete --purge helloworld
 ```
+
+# Reference
+
+https://docs.microsoft.com/en-us/azure/container-registry/container-registry-helm-repos#use-the-helm-2-client
