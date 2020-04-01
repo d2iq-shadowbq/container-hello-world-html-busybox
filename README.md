@@ -169,4 +169,5 @@ Reference: https://v2.helm.sh/docs/using_helm/#helm-delete-deleting-a-release
 
 # Reference
 
-https://docs.microsoft.com/en-us/azure/container-registry/container-registry-helm-repos#use-the-helm-2-client
+https://v2.helm.sh/docs/using_helm/#helm-repo-working-with-repositories  
+https://docs.microsoft.com/en-us/azure/container-registry/container-registry-helm-repos#use-the-helm-2-client  
