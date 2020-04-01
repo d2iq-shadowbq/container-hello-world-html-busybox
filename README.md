@@ -156,12 +156,16 @@ docker images # list images
 docker rmi hello-world
 ```
 
+Reference: https://docs.docker.com/config/pruning/
+
 ### Remove created helm packages
 
 ```
 helm delete helloworld
 helm delete --purge helloworld
 ```
+
+Reference: https://v2.helm.sh/docs/using_helm/#helm-delete-deleting-a-release
 
 # Reference
 
